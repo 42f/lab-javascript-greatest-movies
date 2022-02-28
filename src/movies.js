@@ -31,12 +31,20 @@ function dramaMoviesScore(movies) {
 function orderByYear(movies) {
   const sortedMovies = [...movies];
   sortedMovies.sort((a, b) => {
-    if (a.year === b.year && b.title < a.title) {
-      return 1;
-    } else if (a.year === b.year && b.title > a.title) {
-      return -1;
+
+    // after TA's feedbacks
+    if (a.year === b.year) {
+      return a.title?.toLowerCase().localeCompare(b.title?.toLowerCase());
     }
     return a.year - b.year;
+
+    // First try:
+    // if (a.year === b.year && b.title < a.title) {
+    //   return 1;
+    // } else if (a.year === b.year && b.title > a.title) {
+    //   return -1;
+    // // }
+    // return a.year - b.year;
   })
   return sortedMovies;
 }
@@ -99,7 +107,9 @@ function getBestYear(years) {
 
 function getMoviesByYear(movies) {
   const years = {};
-  for (movie of movies) {
+  // refractor after TA's feedback
+  for (let movie of movies) {
+  // for (movie of movies) {
     years[(movie.year || 0)] = [...(years[movie.year] || []), movie];
   }
   return years;
